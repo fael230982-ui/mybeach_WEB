@@ -1,8 +1,8 @@
 /* generated using openapi-typescript-codegen -- do not edit */
 /* istanbul ignore file */
 /* tslint:disable */
-export type TokenResponse = {
-    access_token: string;
-    token_type?: string;
+/* eslint-disable */
+export type GuardianConsentRevokePayload = {
+    consent_id: string;
 };
 

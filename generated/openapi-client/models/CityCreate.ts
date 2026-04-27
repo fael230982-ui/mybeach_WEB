@@ -1,6 +1,7 @@
 /* generated using openapi-typescript-codegen -- do not edit */
 /* istanbul ignore file */
 /* tslint:disable */
+/* eslint-disable */
 export type CityCreate = {
     name: string;
     /**
@@ -11,5 +12,8 @@ export type CityCreate = {
     max_lat?: (number | null);
     min_lng?: (number | null);
     max_lng?: (number | null);
+    is_active?: boolean;
+    nome?: (string | null);
+    uf?: (string | null);
 };
 

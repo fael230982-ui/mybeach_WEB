@@ -10,7 +10,8 @@
     "lint": "eslint",
     "test": "node --experimental-strip-types --test tests/**/*.test.ts",
     "test:e2e": "playwright test",
-    "generate-api": "openapi --input https://api.mybeach.com.br/openapi.json --output ./generated/openapi-client --client axios"
+    "generate-api": "openapi --input https://api.mybeach.com.br/openapi.json --output ./generated/openapi-client --client axios",
+    "generate-api:local": "openapi --input \"DOCS/API-Mbeach-1.2.openapi.json\" --output ./generated/openapi-client --client axios"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",

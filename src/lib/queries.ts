@@ -53,6 +53,26 @@ export function extractArrayData<T>(result: SettledResult<unknown>) {
   return [] as T[];
 }
 
+export function normalizeActiveUsersPayload(value: unknown) {
+  if (Array.isArray(value)) {
+    return value as AppUser[];
+  }
+
+  if (value && typeof value === "object" && Array.isArray((value as { items?: unknown }).items)) {
+    return (value as { items: unknown[] }).items as AppUser[];
+  }
+
+  return [] as AppUser[];
+}
+
+export function extractActiveUsersData(result: SettledResult<unknown>) {
+  if (result.status === "fulfilled") {
+    return normalizeActiveUsersPayload(result.value);
+  }
+
+  return [] as AppUser[];
+}
+
 export function extractObjectData<T extends object>(result: SettledResult<unknown>) {
   if (result.status === "fulfilled" && result.value && typeof result.value === "object") {
     return result.value as T;
@@ -178,7 +198,7 @@ export function useDashboardQuery() {
         alerts: extractAlertData(alertsResult),
         posts: extractArrayData<AppPost>(postsResult),
         users: extractArrayData<AppUser>(usersResult),
-        activeUsers: extractArrayData<AppUser>(activeUsersResult),
+        activeUsers: extractActiveUsersData(activeUsersResult),
         zones: extractArrayData<AppZone>(zonesResult),
         failedSources,
       };
@@ -231,7 +251,7 @@ export function useReportsDataQuery() {
 
       return {
         alerts: extractAlertData(alertsResult),
-        activeUsers: extractArrayData<AppUser>(activeUsersResult),
+        activeUsers: extractActiveUsersData(activeUsersResult),
         beaches: extractArrayData<AppBeach>(beachesResult),
         stats:
           statsData && "kpis" in statsData
@@ -259,7 +279,7 @@ export function useWorkforceQuery() {
 
       return {
         users: extractArrayData<AppUser>(usersResult),
-        activeUsers: extractArrayData<AppUser>(activeUsersResult),
+        activeUsers: extractActiveUsersData(activeUsersResult),
         failedSources,
       };
     },

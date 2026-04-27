@@ -10,12 +10,17 @@ export interface AppUser {
   name: string;
   email: string;
   role: UserRole;
+  legacy_role?: string | null;
   city_id?: string | null;
   city_name?: string | null;
   email_verified?: boolean;
   fcm_token?: string | null;
   last_ping?: string | null;
   is_active?: boolean | null;
+  latitude?: number | string | null;
+  longitude?: number | string | null;
+  battery_level?: number | null;
+  status?: string | null;
 }
 
 export interface AppCity {
@@ -90,8 +95,15 @@ export interface FleetUnit {
   tipo?: string;
   status?: string;
   equipe?: string;
+  current_crew?: string | null;
   base?: string;
-  last_ping?: string;
+  base_sector?: string | null;
+  last_ping?: string | null;
+  updated_at?: string | null;
+  latitude?: number | string | null;
+  longitude?: number | string | null;
+  assigned_post_id?: string | null;
+  is_operational?: boolean | null;
 }
 
 export interface AuditLogEntry {

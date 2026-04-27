@@ -1,13 +1,13 @@
 /* generated using openapi-typescript-codegen -- do not edit */
 /* istanbul ignore file */
 /* tslint:disable */
-export type AutoUpdateStatus = {
+/* eslint-disable */
+export type AutoStatusUpdate = {
     status_level: string;
-    temperature?: (number | null);
-    wind_speed?: (number | null);
-    wave_height?: (number | null);
+    wave_height: number;
+    wind_speed: number;
+    temperature: number;
     water_quality?: (string | null);
-    uv_index?: (number | null);
     auto_alerts?: (string | null);
 };
 

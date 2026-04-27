@@ -7,20 +7,24 @@ test("fleet status normalization accepts aliases and accents", () => {
   assert.equal(normalizeFleetStatus("Na base (parada)"), "base");
   assert.equal(normalizeFleetStatus("em uso ou alocada"), "allocated");
   assert.equal(normalizeFleetStatus("EM USO"), "allocated");
-  assert.equal(normalizeFleetStatus("manutenção"), "maintenance");
+  assert.equal(normalizeFleetStatus("manutencao"), "maintenance");
   assert.equal(normalizeFleetStatus("baixada (inativa)"), "inactive");
 });
 
-test("fleet export rows normalize identifier, status and ping state", () => {
+test("fleet export rows normalize api 1.2 telemetry fields", () => {
   const rows = exportableFleetRows([
     {
       id: "1",
       identifier: "UR-101",
       type: "LANCHA",
       status: "em uso ou alocada",
-      equipe: "Equipe Alfa",
-      base: "Ponta da Praia",
+      current_crew: "Equipe Alfa",
+      base_sector: "Ponta da Praia",
       last_ping: "Agora",
+      latitude: -23.9,
+      longitude: -46.3,
+      assigned_post_id: "post-1",
+      is_operational: true,
     },
     {
       id: "2",
@@ -29,7 +33,7 @@ test("fleet export rows normalize identifier, status and ping state", () => {
       status: "manutencao",
       equipe: "",
       base: "",
-      last_ping: null as never,
+      last_ping: null,
     },
   ]);
 
@@ -41,14 +45,22 @@ test("fleet export rows normalize identifier, status and ping state", () => {
     "Ponta da Praia",
     "Agora",
     "SIM",
+    -23.9,
+    -46.3,
+    "post-1",
+    "SIM",
   ]);
   assert.deepEqual(rows[1], [
     "UR-202",
     "VIATURA 4X4",
     "Manutencao",
-    "Não designada",
+    "Nao designada",
     "Base Central",
     "Sem ping",
-    "NÃO",
+    "NAO",
+    "",
+    "",
+    "",
+    "SIM",
   ]);
 });

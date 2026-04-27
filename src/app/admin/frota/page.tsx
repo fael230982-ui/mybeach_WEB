@@ -125,7 +125,7 @@ function FrotaEfetivoPageContent() {
     () =>
       frota.filter((item: FleetUnit) => {
         const prefixo = item.identifier || item.prefixo || "";
-        const equipe = item.equipe || "";
+        const equipe = item.current_crew || item.equipe || "";
         const termo = normalizeText(busca);
         const matchBusca =
           normalizeText(prefixo).includes(termo) || normalizeText(equipe).includes(termo);
@@ -139,7 +139,7 @@ function FrotaEfetivoPageContent() {
   function exportarFrota() {
     downloadCsv(
       "frota_operacional.csv",
-      ["PREFIXO", "TIPO", "STATUS", "GUARNIÇÃO", "BASE", "ÚLTIMO PING", "ONLINE"],
+      ["PREFIXO", "TIPO", "STATUS", "GUARNICAO", "BASE", "ULTIMO PING", "ONLINE", "LATITUDE", "LONGITUDE", "POSTO VINCULADO", "OPERACIONAL"],
       exportableFleetRows(filtrados),
     );
 
@@ -249,6 +249,9 @@ function FrotaEfetivoPageContent() {
                 const status = veiculo.status || "Na base (parada)";
                 const pingRecente = hasRecentPing(veiculo.last_ping);
                 const pingLabel = formatLastPing(veiculo.last_ping);
+                const crew = veiculo.current_crew || veiculo.equipe || "Nao designada";
+                const base = veiculo.base_sector || veiculo.base || "Base Central";
+                const hasCoordinates = veiculo.latitude != null && veiculo.longitude != null;
                 const normalizedStatus = normalizeFleetStatus(status);
 
                 let corStatus = "bg-emerald-500 shadow-emerald-500/30";
@@ -288,7 +291,7 @@ function FrotaEfetivoPageContent() {
                           </span>
                           <p className="flex items-center gap-2 text-sm font-bold text-slate-700">
                             <ShieldAlert size={14} className="text-amber-500" />
-                            {veiculo.equipe || "Não designada"}
+                            {crew}
                           </p>
                         </div>
                         <div>
@@ -297,9 +300,20 @@ function FrotaEfetivoPageContent() {
                           </span>
                           <p className="flex items-center gap-2 text-sm font-bold text-slate-700">
                             <MapPin size={14} className="text-blue-500" />
-                            {veiculo.base || "Base Central"}
+                            {base}
                           </p>
                         </div>
+                        {hasCoordinates ? (
+                          <div>
+                            <span className="mb-1 block text-[9px] font-black uppercase tracking-widest text-slate-400">
+                              Localizacao
+                            </span>
+                            <p className="flex items-center gap-2 text-xs font-bold text-slate-600">
+                              <MapPin size={14} className="text-emerald-500" />
+                              {veiculo.latitude}, {veiculo.longitude}
+                            </p>
+                          </div>
+                        ) : null}
                       </div>
                       <div className="mt-5 flex items-center justify-between border-t border-slate-100 pt-4">
                         <div className={`flex items-center gap-1.5 rounded-md border px-2 py-1 text-[9px] font-mono font-bold ${pingRecente ? "border-emerald-200 bg-emerald-50 text-emerald-700" : "border-slate-200 bg-white text-slate-400"}`}>

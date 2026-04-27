@@ -11,6 +11,14 @@ Todas as alteracoes relevantes deste projeto devem ser registradas aqui.
 - Pendencias de backend priorizadas para evitar retrabalho antes de nova API.
 - Guia de deploy com variaveis, validacao e verificacoes pos-deploy.
 - Plano de QA visual e manual sem dependencia de contrato novo.
+- API 1.2 versionada em `DOCS/` e cliente OpenAPI auxiliar regenerado.
+- Documento de analise do aproveitamento da API 1.2 pelo admin.
+- Documento de pendencias restantes do backend apos revisao da API 1.2.
+
+### Changed
+
+- Leitura de `users/active` passa a aceitar tanto o array legado quanto o payload 1.2 com `items`.
+- Frota passa a reconhecer campos 1.2 como `current_crew`, `base_sector`, coordenadas, posto vinculado e `is_operational`.
 
 ## [1.0.0] - 2026-04-27
 

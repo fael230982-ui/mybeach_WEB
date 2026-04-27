@@ -1,6 +1,7 @@
 /* generated using openapi-typescript-codegen -- do not edit */
 /* istanbul ignore file */
 /* tslint:disable */
+/* eslint-disable */
 import type { Body_upload_child_photo_children__child_id__photo_post } from '../models/Body_upload_child_photo_children__child_id__photo_post';
 import type { ChildCreate } from '../models/ChildCreate';
 import type { ChildResponse } from '../models/ChildResponse';
@@ -34,6 +35,26 @@ export class ChildrenService {
             url: '/children/',
             body: requestBody,
             mediaType: 'application/json',
+            errors: {
+                422: `Validation Error`,
+            },
+        });
+    }
+    /**
+     * Get Child Photo Policy
+     * @param childId
+     * @returns any Successful Response
+     * @throws ApiError
+     */
+    public static getChildPhotoPolicyChildrenChildIdPhotoPolicyGet(
+        childId: string,
+    ): CancelablePromise<any> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/children/{child_id}/photo-policy',
+            path: {
+                'child_id': childId,
+            },
             errors: {
                 422: `Validation Error`,
             },

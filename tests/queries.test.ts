@@ -1,7 +1,16 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 
-import { collectFailedSources, extractAlertData, extractArrayData, extractNumericStat, extractObjectData, type SettledResult } from "../src/lib/queries.ts";
+import {
+  collectFailedSources,
+  extractActiveUsersData,
+  extractAlertData,
+  extractArrayData,
+  extractNumericStat,
+  extractObjectData,
+  normalizeActiveUsersPayload,
+  type SettledResult,
+} from "../src/lib/queries.ts";
 import { alertFixtures } from "./fixtures/alerts.fixture.ts";
 
 test("query helpers keep fulfilled array payloads and discard invalid values", () => {
@@ -44,4 +53,18 @@ test("query helpers keep numeric stats including zero values", () => {
   assert.equal(extractNumericStat({ efetivo: 0, frota: 12 }, "frota"), 12);
   assert.equal(extractNumericStat({ efetivo: Number.NaN }, "efetivo"), null);
   assert.equal(extractNumericStat(null, "efetivo"), null);
+});
+
+test("query helpers accept users active payload from api 1.2", () => {
+  const activePayload = {
+    active_guards: 1,
+    active_window_minutes: 15,
+    generated_at: "2026-04-27T12:00:00.000Z",
+    items: [{ id: "1", name: "Ana", role: "GV", is_active: true, status: "ACTIVE" }],
+  };
+  const result: SettledResult<unknown> = { status: "fulfilled", value: activePayload };
+
+  assert.deepEqual(normalizeActiveUsersPayload(activePayload), activePayload.items);
+  assert.deepEqual(extractActiveUsersData(result), activePayload.items);
+  assert.deepEqual(normalizeActiveUsersPayload(activePayload.items), activePayload.items);
 });
