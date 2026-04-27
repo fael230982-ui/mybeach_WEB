@@ -2,6 +2,16 @@
 
 Todas as alteracoes relevantes deste projeto devem ser registradas aqui.
 
+## [Unreleased] - 2026-04-27
+
+### Added
+
+- Manual de operacao do painel administrativo.
+- Checklist de homologacao por tela, perfil e fluxo operacional.
+- Pendencias de backend priorizadas para evitar retrabalho antes de nova API.
+- Guia de deploy com variaveis, validacao e verificacoes pos-deploy.
+- Plano de QA visual e manual sem dependencia de contrato novo.
+
 ## [1.0.0] - 2026-04-27
 
 ### Added
@@ -19,4 +29,3 @@ Todas as alteracoes relevantes deste projeto devem ser registradas aqui.
 - `npm run test` executado em 2026-04-27: 52 testes aprovados.
 - `npm run lint` executado em 2026-04-27: aprovado.
 - `npm run build` executado em 2026-04-27: aprovado.
-
