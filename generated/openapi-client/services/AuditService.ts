@@ -2,10 +2,11 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
+import type { AuditLogResponse } from '../models/AuditLogResponse';
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { OpenAPI } from '../core/OpenAPI';
 import { request as __request } from '../core/request';
-export class AuditoriaService {
+export class AuditService {
     /**
      * Get Audit Logs
      * Retorna os logs para a tela de Auditoria.
@@ -17,7 +18,7 @@ export class AuditoriaService {
      * @param resourceId
      * @param dateFrom
      * @param dateTo
-     * @returns any Successful Response
+     * @returns AuditLogResponse Successful Response
      * @throws ApiError
      */
     public static getAuditLogsLogsGet(
@@ -28,7 +29,7 @@ export class AuditoriaService {
         resourceId?: (string | null),
         dateFrom?: (string | null),
         dateTo?: (string | null),
-    ): CancelablePromise<any> {
+    ): CancelablePromise<Array<AuditLogResponse>> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/logs/',
@@ -57,7 +58,7 @@ export class AuditoriaService {
      * @param resourceId
      * @param dateFrom
      * @param dateTo
-     * @returns any Successful Response
+     * @returns AuditLogResponse Successful Response
      * @throws ApiError
      */
     public static getAuditLogsLogsGet1(
@@ -68,7 +69,7 @@ export class AuditoriaService {
         resourceId?: (string | null),
         dateFrom?: (string | null),
         dateTo?: (string | null),
-    ): CancelablePromise<any> {
+    ): CancelablePromise<Array<AuditLogResponse>> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/logs',

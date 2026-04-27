@@ -14,11 +14,19 @@ Todas as alteracoes relevantes deste projeto devem ser registradas aqui.
 - API 1.2 versionada em `DOCS/` e cliente OpenAPI auxiliar regenerado.
 - Documento de analise do aproveitamento da API 1.2 pelo admin.
 - Documento de pendencias restantes do backend apos revisao da API 1.2.
+- Documento de status tecnico do painel.
+- API 1.3 versionada em `DOCS/` e cliente OpenAPI auxiliar atualizado.
+- Documento de analise do aproveitamento da API 1.3 pelo admin.
+- Documento de pendencias restantes do backend apos revisao da API 1.3.
 
 ### Changed
 
 - Leitura de `users/active` passa a aceitar tanto o array legado quanto o payload 1.2 com `items`.
 - Frota passa a reconhecer campos 1.2 como `current_crew`, `base_sector`, coordenadas, posto vinculado e `is_operational`.
+- Mensagens operacionais de erro passam a tratar status comuns de API de forma mais clara.
+- Relatorios passam a aceitar `dashboard/stats` no formato 1.3.
+- Efetivo passa a usar `workforce` 1.3 como fonte preferencial de ativos quando disponivel, mantendo fallback para `users/active`.
+- Logs passam a reconhecer e exportar campos de auditoria 1.3.
 
 ## [1.0.0] - 2026-04-27
 

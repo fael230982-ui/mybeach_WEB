@@ -6,8 +6,10 @@ import {
   extractActiveUsersData,
   extractAlertData,
   extractArrayData,
+  extractDashboardStatsData,
   extractNumericStat,
   extractObjectData,
+  normalizeDashboardStatsPayload,
   normalizeActiveUsersPayload,
   type SettledResult,
 } from "../src/lib/queries.ts";
@@ -67,4 +69,28 @@ test("query helpers accept users active payload from api 1.2", () => {
   assert.deepEqual(normalizeActiveUsersPayload(activePayload), activePayload.items);
   assert.deepEqual(extractActiveUsersData(result), activePayload.items);
   assert.deepEqual(normalizeActiveUsersPayload(activePayload.items), activePayload.items);
+});
+
+test("query helpers normalize dashboard stats payload from api 1.3", () => {
+  const statsPayload = {
+    metricas_cards: {
+      ocorrencias_ativas: 4,
+      praias_visiveis: 8,
+      mar_perigoso: 1,
+      agentes_no_local: 12,
+    },
+    workforce: {
+      active_guards: 10,
+    },
+  };
+  const result: SettledResult<unknown> = { status: "fulfilled", value: statsPayload };
+
+  assert.deepEqual(normalizeDashboardStatsPayload(statsPayload), {
+    ocorrencias_ativas: 4,
+    praias_visiveis: 8,
+    mar_perigoso: 1,
+    agentes_no_local: 12,
+    efetivo: 10,
+  });
+  assert.deepEqual(extractDashboardStatsData(result), normalizeDashboardStatsPayload(statsPayload));
 });

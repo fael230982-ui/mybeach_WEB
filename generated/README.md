@@ -9,5 +9,5 @@ Esses artefatos ficam fora de `src/` para reduzir acoplamento com o build princi
 Referencia local atual:
 
 ```text
-DOCS/API-Mbeach-1.2.openapi.json
+DOCS/API-Mbeach-1.3.openapi.json
 ```

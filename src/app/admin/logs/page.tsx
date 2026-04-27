@@ -18,7 +18,7 @@ export default function LogsPage() {
   function exportarLogs() {
     downloadCsv(
       "logs_auditoria.csv",
-      ["DATA_HORA", "ACAO", "USUARIO", "IP", "STATUS"],
+      ["DATA_HORA", "ACAO", "USUARIO", "PERFIL", "RECURSO", "ID_RECURSO", "IP", "STATUS"],
       exportableAuditLogRows(logs),
     );
   }
@@ -86,6 +86,7 @@ export default function LogsPage() {
                   <th className="px-6 py-4">Data / Hora</th>
                   <th className="px-6 py-4">Ação / Endpoint</th>
                   <th className="px-6 py-4">Usuário</th>
+                  <th className="px-6 py-4">Recurso</th>
                   <th className="px-6 py-4">IP / Status</th>
                 </tr>
               </thead>
@@ -99,10 +100,17 @@ export default function LogsPage() {
                     <td className="px-6 py-4 font-bold text-slate-800">
                       {log.action || log.endpoint || "Ação não registrada"}
                     </td>
-                    <td className="px-6 py-4 text-blue-600">{log.user || log.user_id || "Sistema"}</td>
+                    <td className="px-6 py-4 text-blue-600">
+                      <span className="block">{log.user || log.user_id || "Sistema"}</span>
+                      {log.user_role ? <span className="text-[10px] font-bold uppercase tracking-widest text-slate-400">{log.user_role}</span> : null}
+                    </td>
+                    <td className="px-6 py-4 text-slate-500">
+                      {log.resource_type || "N/A"}
+                      {log.resource_id ? <span className="ml-2 text-slate-400">{log.resource_id}</span> : null}
+                    </td>
                     <td className="px-6 py-4">
                       <span className="rounded bg-slate-100 px-2 py-1 font-bold text-slate-600">
-                        {log.ip || log.status || "N/A"}
+                        {log.ip_address || log.ip || log.status || "N/A"}
                       </span>
                     </td>
                   </tr>

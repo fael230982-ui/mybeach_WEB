@@ -8,7 +8,7 @@ import type { AlertUpdateStatus } from '../models/AlertUpdateStatus';
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { OpenAPI } from '../core/OpenAPI';
 import { request as __request } from '../core/request';
-export class AlertasService {
+export class AlertsService {
     /**
      * List Alerts
      * Lista todos os alertas com nomes de praia e zona

@@ -43,6 +43,14 @@ type AlertsQueryOptions = {
   refetchInterval?: number;
 };
 
+type DashboardStatsPayload = {
+  kpis?: Record<string, unknown>;
+  metricas_cards?: Record<string, unknown>;
+  workforce?: {
+    active_guards?: unknown;
+  };
+};
+
 export type SettledResult<T> = PromiseSettledResult<T>;
 
 export function extractArrayData<T>(result: SettledResult<unknown>) {
@@ -84,6 +92,42 @@ export function extractObjectData<T extends object>(result: SettledResult<unknow
 export function extractNumericStat(stats: Record<string, number> | null | undefined, key: string) {
   const value = stats?.[key];
   return typeof value === "number" && Number.isFinite(value) ? value : null;
+}
+
+function collectNumericRecord(source: Record<string, unknown> | undefined) {
+  if (!source) {
+    return {};
+  }
+
+  return Object.fromEntries(
+    Object.entries(source).filter(
+      (entry): entry is [string, number] => typeof entry[1] === "number" && Number.isFinite(entry[1]),
+    ),
+  );
+}
+
+export function normalizeDashboardStatsPayload(value: unknown) {
+  if (!value || typeof value !== "object") {
+    return null;
+  }
+
+  const payload = value as DashboardStatsPayload;
+  const kpis = collectNumericRecord(payload.kpis);
+  const stats = Object.keys(kpis).length > 0 ? kpis : collectNumericRecord(payload.metricas_cards);
+
+  if (typeof payload.workforce?.active_guards === "number" && Number.isFinite(payload.workforce.active_guards) && stats.efetivo === undefined) {
+    stats.efetivo = payload.workforce.active_guards;
+  }
+
+  return Object.keys(stats).length > 0 ? stats : null;
+}
+
+export function extractDashboardStatsData(result: SettledResult<unknown>) {
+  if (result.status === "fulfilled") {
+    return normalizeDashboardStatsPayload(result.value);
+  }
+
+  return null;
 }
 
 export function collectFailedSources(entries: Array<{ source: string; result: SettledResult<unknown> }>) {
@@ -233,30 +277,29 @@ export function useReportsDataQuery() {
   return useQuery({
     queryKey: queryKeys.reports,
     queryFn: async (): Promise<ReportsData> => {
-      const [statsResult, alertsResult, beachesResult, usersResult, activeUsersResult] = await Promise.allSettled([
+      const [statsResult, alertsResult, beachesResult, usersResult, activeUsersResult, workforceResult] = await Promise.allSettled([
         apiFetch("/dashboard/stats"),
         apiFetch("/alerts"),
         apiFetch("/beaches"),
         apiFetch("/users"),
         apiFetch("/users/active"),
+        apiFetch("/workforce"),
       ]);
-      const statsData = extractObjectData<{ kpis?: Record<string, number> }>(statsResult);
+      const workforceActiveUsers = extractActiveUsersData(workforceResult);
       const failedSources = collectFailedSources([
         { source: "dashboard-stats", result: statsResult },
         { source: "alerts", result: alertsResult },
         { source: "beaches", result: beachesResult },
         { source: "users", result: usersResult },
         { source: "usuarios-ativos", result: activeUsersResult },
+        { source: "workforce", result: workforceResult },
       ]);
 
       return {
         alerts: extractAlertData(alertsResult),
-        activeUsers: extractActiveUsersData(activeUsersResult),
+        activeUsers: workforceActiveUsers.length > 0 ? workforceActiveUsers : extractActiveUsersData(activeUsersResult),
         beaches: extractArrayData<AppBeach>(beachesResult),
-        stats:
-          statsData && "kpis" in statsData
-            ? ((statsData.kpis || null) as Record<string, number> | null)
-            : null,
+        stats: extractDashboardStatsData(statsResult),
         users: extractArrayData<AppUser>(usersResult),
         failedSources,
       };
@@ -268,18 +311,21 @@ export function useWorkforceQuery() {
   return useQuery({
     queryKey: [...queryKeys.users, "workforce"],
     queryFn: async (): Promise<WorkforceData> => {
-      const [usersResult, activeUsersResult] = await Promise.allSettled([
+      const [usersResult, activeUsersResult, workforceResult] = await Promise.allSettled([
         apiFetch("/users"),
         apiFetch("/users/active"),
+        apiFetch("/workforce"),
       ]);
+      const workforceActiveUsers = extractActiveUsersData(workforceResult);
       const failedSources = collectFailedSources([
         { source: "users", result: usersResult },
         { source: "usuarios-ativos", result: activeUsersResult },
+        { source: "workforce", result: workforceResult },
       ]);
 
       return {
         users: extractArrayData<AppUser>(usersResult),
-        activeUsers: extractActiveUsersData(activeUsersResult),
+        activeUsers: workforceActiveUsers.length > 0 ? workforceActiveUsers : extractActiveUsersData(activeUsersResult),
         failedSources,
       };
     },

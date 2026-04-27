@@ -8,7 +8,7 @@ import type { PostUpdate } from '../models/PostUpdate';
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { OpenAPI } from '../core/OpenAPI';
 import { request as __request } from '../core/request';
-export class PostosService {
+export class PostsService {
     /**
      * List Posts
      * @returns PostResponse Successful Response

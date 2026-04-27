@@ -4,11 +4,12 @@
 /* eslint-disable */
 import type { FleetCreate } from '../models/FleetCreate';
 import type { FleetResponse } from '../models/FleetResponse';
+import type { FleetTelemetryResponse } from '../models/FleetTelemetryResponse';
 import type { FleetUpdate } from '../models/FleetUpdate';
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { OpenAPI } from '../core/OpenAPI';
 import { request as __request } from '../core/request';
-export class FrotasService {
+export class FleetsService {
     /**
      * List Fleets
      * @returns FleetResponse Successful Response
@@ -136,12 +137,12 @@ export class FrotasService {
     /**
      * Get Fleet Telemetry
      * @param fleetId
-     * @returns any Successful Response
+     * @returns FleetTelemetryResponse Successful Response
      * @throws ApiError
      */
     public static getFleetTelemetryFleetsFleetIdTelemetryGet(
         fleetId: string,
-    ): CancelablePromise<any> {
+    ): CancelablePromise<FleetTelemetryResponse> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/fleets/{fleet_id}/telemetry',

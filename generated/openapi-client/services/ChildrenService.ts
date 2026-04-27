@@ -4,6 +4,7 @@
 /* eslint-disable */
 import type { Body_upload_child_photo_children__child_id__photo_post } from '../models/Body_upload_child_photo_children__child_id__photo_post';
 import type { ChildCreate } from '../models/ChildCreate';
+import type { ChildPhotoPolicyResponse } from '../models/ChildPhotoPolicyResponse';
 import type { ChildResponse } from '../models/ChildResponse';
 import type { ChildUpdate } from '../models/ChildUpdate';
 import type { CancelablePromise } from '../core/CancelablePromise';
@@ -43,12 +44,12 @@ export class ChildrenService {
     /**
      * Get Child Photo Policy
      * @param childId
-     * @returns any Successful Response
+     * @returns ChildPhotoPolicyResponse Successful Response
      * @throws ApiError
      */
     public static getChildPhotoPolicyChildrenChildIdPhotoPolicyGet(
         childId: string,
-    ): CancelablePromise<any> {
+    ): CancelablePromise<ChildPhotoPolicyResponse> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/children/{child_id}/photo-policy',

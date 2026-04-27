@@ -6,7 +6,10 @@ export function exportableAuditLogRows(logs: AuditLogEntry[]) {
     formatDateTime(log.created_at, "Data indisponível"),
     log.action || log.endpoint || "Ação não registrada",
     log.user || log.user_id || "Sistema",
-    log.ip || "",
+    log.user_role || "",
+    log.resource_type || "",
+    log.resource_id || "",
+    log.ip_address || log.ip || "",
     log.status || "",
   ]);
 }

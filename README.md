@@ -28,6 +28,9 @@ Painel administrativo em Next.js para operacao, monitoramento e gestao do ecossi
 - `DOCS/PLANO_QA_VISUAL_MYBEACH_ADMIN_2026-04-27.md`
 - `DOCS/API_1_2_ANALISE_APROVEITAMENTO_MYBEACH_ADMIN_2026-04-27.md`
 - `DOCS/PENDENCIAS_BACKEND_RESTANTES_API_1_2_MYBEACH_ADMIN_2026-04-27.md`
+- `DOCS/API_1_3_ANALISE_APROVEITAMENTO_MYBEACH_ADMIN_2026-04-27.md`
+- `DOCS/PENDENCIAS_BACKEND_RESTANTES_API_1_3_MYBEACH_ADMIN_2026-04-27.md`
+- `DOCS/STATUS_TECNICO_MYBEACH_ADMIN_2026-04-27.md`
 
 ## Requisitos
 
@@ -91,7 +94,7 @@ O cliente gerado fica em `generated/openapi-client`.
 
 Ele nao faz parte do runtime atual do frontend; serve apenas como artefato auxiliar de contrato e referencia. Depois de regenerar, revise os wrappers de `src/lib/queries.ts` e qualquer adaptacao de tipos em `src/lib/types.ts`.
 
-Para regenerar a partir da API 1.2 versionada em `DOCS/`:
+Para regenerar a partir da API 1.3 versionada em `DOCS/`:
 
 ```bash
 npm run generate-api:local

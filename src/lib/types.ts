@@ -113,7 +113,12 @@ export interface AuditLogEntry {
   endpoint?: string;
   user?: string;
   user_id?: string;
+  user_role?: string | null;
   ip?: string;
+  ip_address?: string | null;
+  resource_type?: string | null;
+  resource_id?: string | null;
+  details?: Record<string, unknown> | string | null;
   status?: string | number;
 }
 
