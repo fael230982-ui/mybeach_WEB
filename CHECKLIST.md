@@ -17,7 +17,6 @@
 
 ## Release
 
-- [ ] Commit inicial realizado.
-- [ ] Branch `main` publicada no GitHub.
-- [ ] Handoff de publicacao registrado na pasta compartilhada.
-
+- [x] Commit inicial realizado em 2026-04-27.
+- [x] Branch `main` publicada no GitHub em 2026-04-27.
+- [x] Handoff de publicacao registrado na pasta compartilhada em 2026-04-27.
